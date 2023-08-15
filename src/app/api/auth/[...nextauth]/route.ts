@@ -1,9 +1,5 @@
 import NextAuth from "next-auth"
-import GithubProvider from 'next-auth/providers/github'
-import { PrismaAdapter } from "@next-auth/prisma-adapter"
-import { PrismaClient } from "@prisma/client"
 import CredentialsProvider from "next-auth/providers/credentials";
-
 
 const handler = NextAuth({
     providers: [
@@ -52,6 +48,18 @@ const handler = NextAuth({
 
     session: {
         strategy: "jwt"
+    },
+
+    callbacks: {
+
+        async jwt({ token, user }) {
+            return ({ ...user, ...token })
+        },
+
+        async session({ session, token }) {
+            session.user = token as any;
+            return session;
+        }
     }
 });
 

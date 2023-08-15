@@ -6,6 +6,7 @@ import React from "react";
 
 const Home = () => {
   const { data: session } = useSession();
+  console.log(session?.user);
   return (
     <>
       {session?.user ? <p>{session.user.name}</p> : <p>pas connecté</p>}
