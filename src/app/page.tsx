@@ -1,11 +1,18 @@
 "use client"
 import { Button } from "@/components/ui/button";
-import { signIn } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 import React from "react";
 
 const Home = () => {
-  return <Button onClick={() => signIn("github")}>Sign in with github</Button>
+  const { data: session } = useSession();
+  return (
+    <>
+      {session?.user ? <p>{session.user.name}</p> : <p>pas connecté</p>}
+      <Button onClick={() => signIn()}>Sign in </Button>
+      <Button onClick={() => signOut()}>Sign out</Button>
+    </>
+  )
 }
 
 export default Home;

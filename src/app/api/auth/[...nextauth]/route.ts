@@ -20,10 +20,10 @@ const handler = NextAuth({
             },
             async authorize(credentials, req) {
                 // Add logic here to look up the user from the credentials supplied
-                const res = await fetch("api/login", {
+                const res = await fetch(process.env.NEXTAUTH_URL + "api/login", {
                     method: "POST",
                     headers: {
-                        "Content-Type": "application/json",   
+                        "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
                         name: credentials?.username,
@@ -44,7 +44,15 @@ const handler = NextAuth({
                 }
             }
         })
-    ]
+    ],
+
+    pages: {
+        signIn: "/auth/signIn"
+    },
+
+    session: {
+        strategy: "jwt"
+    }
 });
 
 export { handler as GET, handler as POST };
