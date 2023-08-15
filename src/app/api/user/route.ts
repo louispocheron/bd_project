@@ -7,9 +7,21 @@ interface User {
     email: string
 }
 
-export async function POST(req: Request) {
-
+export const POST = async (req: Request) => {
     const body: User = await req.json();
+
+    const userAlready = await prisma.user.findFirst({
+        where: {
+            email: body.email
+        }
+    })
+
+    if(userAlready) {
+        return new Response(JSON.stringify({
+            message: "user already exist"
+        }))
+    }
+    
     const user = await prisma.user.create({
         data: {
             name: body?.name,
@@ -18,7 +30,7 @@ export async function POST(req: Request) {
         }
     })
 
-    const {password, ...result} = user;
+    const { password, ...result } = user;
 
     return new Response(JSON.stringify(result))
 

@@ -26,7 +26,7 @@ const handler = NextAuth({
                         "Content-Type": "application/json",   
                     },
                     body: JSON.stringify({
-                        username: credentials?.username,
+                        name: credentials?.username,
                         password: credentials?.password
                     })
                 })
