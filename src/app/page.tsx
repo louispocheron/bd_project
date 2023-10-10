@@ -1,11 +1,13 @@
 "use client"
 import { Button } from "@/components/ui/button";
+import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 import React from "react";
 
 const Home = () => {
   const { data: session } = useSession();
+  const axiosAuth = useAxiosAuth();
   console.log(session?.user);
   return (
     <>
